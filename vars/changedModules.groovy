@@ -1,6 +1,6 @@
 @NonCPS
 def call(String prefix = '', String exclude = '') {
-    echo 'a'
+    echo "prefix ${prefix}, exclude ${exclude}"
     paths = filesFromLastSuccessfulBuild()
 
     modules = []
