@@ -1,17 +1,14 @@
+@NonCPS
 def call(String prefix = '', String exclude = '') {
+    echo 'a'
     paths = filesFromLastSuccessfulBuild()
-    getAffectedJavaMoudles(paths)
 
     modules = []
-    for (int i = 0; i < paths.size(); i++) {
-        def splits = paths[i].split('/')
-        if (splits.size() > 1 && splits[0] != 'flux') {
-            modules.add(splits[0])
-        }
-    }
-    modules.toSet().findAll{it ->
+    echo "${paths.join('\n')}"
+    paths.findAll { it ->
         (prefix != '' && it.startsWith(prefix)) && (exclude != '' && !it.startsWith(exclude))
-    }
+    }.collect { it -> it.split('/')[0] }
+
 }
 
 def filesFromLastSuccessfulBuild() {
