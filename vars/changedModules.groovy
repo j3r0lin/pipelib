@@ -5,10 +5,8 @@ def call(String commit = '', String relative = '') {
     modules = []
     for (int i = 0; i < paths.size(); i++) {
         def path = paths[i]
-        if (exclude == '' || !path.startsWith(exclude)) {
-            if (path.split('/').size() > 1) {
-                modules.add path.split('/')[0]
-            }
+        if (path.split('/').size() > 1) {
+            modules.add path.split('/')[0]
         }
     }
     modules.toSet()
