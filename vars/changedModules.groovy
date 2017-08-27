@@ -1,7 +1,5 @@
-#!/usr/bin/groovy
-
-def call(String ver1, String ver2, String prefix = '', String exclude = '') {
-    echo "prefix ${prefix}, exclude ${exclude}"
+def call(String ver1 = '', String ver2 = '', String prefix = '', String exclude = '') {
+    echo "Fetching change sets between $ver1, $ver2, prefix: $prefix, exclude: $exclude"
     paths = changeSets(ver1, ver2)
 
     modules = []
@@ -10,7 +8,9 @@ def call(String ver1, String ver2, String prefix = '', String exclude = '') {
         if (prefix == '' || path.startsWith(prefix)) {
             path = path - prefix
             if (exclude == '' || !path.startsWith(exclude)) {
-                modules.add path.split('/')[0]
+                if (path.split('/').size() > 1) {
+                    modules.add path.split('/')[0]
+                }
             }
         }
     }
