@@ -1,7 +1,9 @@
 def call() {
     def result = currentBuild.currentResult.toLowerCase()
     def color = currentBuild.resultIsWorseOrEqualTo('UNSTABLE') ? 'danger': 'good'
-    slackSend color: color, message: messageFormat("${result} after ${durationString()}")
+    def msg = messageFormat("${result} after ${durationString()}")
+    echo "Send slack message: $msg"
+    slackSend color: color, message: msg
 }
 
 def durationString() {
