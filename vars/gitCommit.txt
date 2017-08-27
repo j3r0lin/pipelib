@@ -1,0 +1,4 @@
+<strong>gitCommit()</strong>
+
+<p>Determines the current git revision in the workspace. The revision is returned directly as a string (<code>git rev-parse HEAD</code>.</p>
+<p>This function must be executed in a <code>node</code> context as it requires a workspace.</p>

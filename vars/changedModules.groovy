@@ -1,36 +1,25 @@
-@NonCPS
-def call(String prefix = '', String exclude = '') {
+#!/usr/bin/groovy
+
+def call(String ver1, String ver2, String prefix = '', String exclude = '') {
     echo "prefix ${prefix}, exclude ${exclude}"
-    paths = filesFromLastSuccessfulBuild()
+    paths = changeSets(ver1, ver2)
 
     modules = []
-    echo "${paths.join('\n')}"
-    paths.findAll { it ->
-        (prefix != '' && it.startsWith(prefix)) && (exclude != '' && !it.startsWith(exclude))
-    }.collect { it -> it.split('/')[0] }
-
-}
-
-def filesFromLastSuccessfulBuild() {
-    passedBuilds = []
-    build = currentBuild
-
-    while ((build != null) && (build.result != 'SUCCESS')) {
-        passedBuilds.add(build)
-        build = build.getPreviousBuild()
-    }
-
-    paths = []
-    for (int x = 0; x < passedBuilds.size(); x++) {
-        def currentBuild = passedBuilds[x];
-        def changeLogSets = currentBuild.rawBuild.changeSets
-        for (int i = 0; i < changeLogSets.size(); i++) {
-            def entries = changeLogSets[i].items
-            for (int j = 0; j < entries.length; j++) {
-                def entry = entries[j]
-                paths.addAll(entry.getAffectedPaths())
+    for (int i = 0; i < paths.size(); i++) {
+        def path = paths[i]
+        if (prefix == '' || path.startsWith(prefix)) {
+            path = path - prefix
+            if (exclude == '' || !path.startsWith(exclude)) {
+                modules.add path.split('/')[0]
             }
         }
     }
-    paths;
+    modules.toSet()
+
+}
+
+def changeSets(String ver1, String ver2) {
+    def multiline = sh returnStdout: true, script: "git diff --name-only $ver1 $ver2"
+    echo "Changed files:\n$multiline"
+    multiline.readLines()
 }
