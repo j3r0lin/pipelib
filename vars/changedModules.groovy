@@ -1,5 +1,5 @@
 def call(String commit = '', String relative = '') {
-    echo "Fetching change sets from $commit, path: $path, exclude: $exclude"
+    echo "Fetching change sets from $commit, relative: $relative"
     paths = changeSets commit, relative
 
     modules = []
