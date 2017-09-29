@@ -14,7 +14,11 @@ def call(String commit = '', String relative = '') {
 }
 
 def changeSets(String commit, String relative = '') {
-    def multiline = sh returnStdout: true, script: "git diff --name-only --relative=$relative $commit"
-    echo "Changed files:\n$multiline"
-    multiline.readLines()
+    try {
+        def multiline = sh returnStdout: true, script: "git diff --name-only --relative=$relative $commit"
+        echo "Changed files:\n$multiline"
+        return multiline.readLines()
+    } catch (Exception ex) {
+        return [];   
+    }
 }
