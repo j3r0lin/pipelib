@@ -1,4 +1,4 @@
-def call(String type = 'java', List<String> services = [], String project = 'elements') {
+def call(String type = 'java', Collection<String> services = [], String project = 'elements') {
     for (int i = 0; i < services.size(); i++) {
         def name = services[i]
 
