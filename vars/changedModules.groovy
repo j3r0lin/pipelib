@@ -10,7 +10,6 @@ def call(String commit = '', String relative = '') {
         }
     }
     modules.toSet()
-
 }
 
 def changeSets(String commit, String relative = '') {
