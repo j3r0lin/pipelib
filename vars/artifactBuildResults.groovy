@@ -2,7 +2,7 @@ def call(Collection<String> java = [], Collection<String> erlang = []) {
     dir('target') {
         script {
             // stash and archive build result
-            if (java > 0) {
+            if (java.size() > 0) {
                 sh 'mv ../*/build/libs/*.jar .'
                 // only archive changed results
                 for (int i = 0; i < java.size(); i++) {
