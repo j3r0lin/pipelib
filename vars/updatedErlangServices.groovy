@@ -1,6 +1,6 @@
 def call(gitPreCommit = '', services = []) {
     def dirs = changedModules(gitPreCommit, 'flux/apps').intersect(services)
-    if (params.buildErlang || env.BRANCH_NAME ==~ /(master)|(release)|(PR).*/) {
+    if (params.buildErlang || env.BRANCH_NAME ==~ /^(master)|(release)|v|(PR).*/) {
         dirs = services
     }
     echo "erlang services to build: ${dirs.join(',')}"
