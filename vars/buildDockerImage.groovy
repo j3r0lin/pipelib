@@ -11,9 +11,9 @@ def call(String type = 'java', Collection<String> services = [], String project 
         }
 
         docker.withRegistry('https://registry.cn-hangzhou.aliyuncs.com', 'han-aliyun-registry') {
-            if (env.BRANCH_NAME == 'master') {
+            if (env.BRANCH_NAME ==~ /^(master|v)/) {
                 app.push(env.version)
-            } else {
+            } else if (env.BRANCH_NAME == 'develop') {
                 app.push('latest')
             }
         }
