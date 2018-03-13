@@ -11,7 +11,7 @@ def call(String type = 'java', Collection<String> services = [], String project 
         }
 
         docker.withRegistry('https://registry.cn-hangzhou.aliyuncs.com', 'han-aliyun-registry') {
-            if (env.BRANCH_NAME ==~ /^(master|v.*) {
+            if (env.BRANCH_NAME ==~ /^(master|v.*)/ {
                 echo "push image to registry with tag '${env.version}'"
                 app.push(env.version)
             } else if (env.BRANCH_NAME == 'develop') {
