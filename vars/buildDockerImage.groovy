@@ -4,7 +4,11 @@ def call(String type = 'java', Collection<String> services = [], String project 
 
         def app;
         if (type == 'java') {
-            sh "cp Dockerfile ${name}/build/libs/"
+            if (fileExists "${name}/Dockerfile") {
+                sh "cp ${name}/Dockerfile ${name}/build/libs/"
+            } else {
+                sh "cp Dockerfile ${name}/build/libs/"
+            }
             app = docker.build("${project}/${name}:onbuild", "--build-arg app=${name} ${name}/build/libs")
         } else if (type == 'erlang') {
             app = docker.build("${project}/${name}:onbuild", "_build/prod/rel/${name}")
