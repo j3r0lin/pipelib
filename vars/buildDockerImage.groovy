@@ -4,7 +4,7 @@ def call(String type = 'java', Collection<String> services = [], String project 
 
         def app;
         if (type == 'java') {
-            if (fileExists "${name}/Dockerfile") {
+            if (fileExists("${name}/Dockerfile")) {
                 sh "cp ${name}/Dockerfile ${name}/build/libs/"
             } else {
                 sh "cp Dockerfile ${name}/build/libs/"
